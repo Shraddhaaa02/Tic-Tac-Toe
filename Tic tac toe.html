@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Tic Tac Toe</h1>
+    <div id="board" class="board">
+      <div class="row">
+        <div class="cell" onclick="handleClick(0)"></div>
+        <div class="cell" onclick="handleClick(1)"></div>
+        <div class="cell" onclick="handleClick(2)"></div>
+      </div>
+      <div class="row">
+        <div class="cell" onclick="handleClick(3)"></div>
+        <div class="cell" onclick="handleClick(4)"></div>
+        <div class="cell" onclick="handleClick(5)"></div>
+      </div>
+      <div class="row">
+        <div class="cell" onclick="handleClick(6)"></div>
+        <div class="cell" onclick="handleClick(7)"></div>
+        <div class="cell" onclick="handleClick(8)"></div>
+      </div>
+    </div>
+    <div id="status" class="status"></div>
+    <button onclick="resetGame()">Reset Game</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+<style class="css">
+ .container {
+  text-align: center;
+}
+
+.board {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.status {
+  margin-top: 20px;
+  font-size: 1.5em;
+}
+</style>
+<script class="js">
+  let currentPlayer = "X";
+let board = ["", "", "", "", "", "", "", "", ""];
+
+const winningCombinations = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]
+];
+
+function handleClick(index) {
+  if (!board[index]) {
+    board[index] = currentPlayer;
+    render();
+    if (checkForWin()) {
+      document.getElementById("status").innerText = `${currentPlayer} wins!`;
+    } else if (isBoardFull()) {
+      document.getElementById("status").innerText = "It's a draw!";
+    } else {
+      currentPlayer = currentPlayer === "X" ? "O" : "X";
+      document.getElementById("status").innerText = `Current player: ${currentPlayer}`;
+    }
+  }
+}
+
+function render() {
+  board.forEach((value, index) => {
+    document.getElementsByClassName("cell")[index].innerText = value;
+  });
+}
+
+function checkForWin() {
+  return winningCombinations.some(combination => {
+    return combination.every(index => {
+      return board[index] === currentPlayer;
+    });
+  });
+}
+
+function isBoardFull() {
+  return board.every(cell => cell !== "");
+}
+
+function resetGame() {
+  currentPlayer = "X";
+  board = ["", "", "", "", "", "", "", "", ""];
+  document.getElementById("status").innerText = "Current player: X";
+  render();
+}
+</script>
