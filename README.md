@@ -1,1 +1,1 @@
-This is a Tic-Tac-Tao web application built using HTML,CSS and JAVASCRIPT.
+This is a Tic-Tac-Toe web application built using HTML,CSS and JAVASCRIPT.
